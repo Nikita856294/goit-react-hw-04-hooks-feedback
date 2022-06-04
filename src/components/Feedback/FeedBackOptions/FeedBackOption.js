@@ -5,7 +5,11 @@ function FeedBackOption({ options, onLeaveFeedback }) {
   return (
     <>
       {options.map(option => (
-        <FeedbackButton type="button" key={option} onClick={() => onLeaveFeedback(option)}>
+        <FeedbackButton
+          type="button"
+          key={option}
+          onClick={() => onLeaveFeedback(option)}
+        >
           {option}
         </FeedbackButton>
       ))}

@@ -1,53 +1,64 @@
-import React, { Component } from 'react/';
+import { useState } from 'react';
 import Statistics from '../Statistics';
 import FeedBackOption from './FeedBackOptions';
 import Section from '../Section';
 import GlobalStyle from '../GlobalStyle';
 import Container from '../Container';
 
-class FeedBack extends Component {
-  state = {
-    good: 0,
-    neutral: 0,
-    bad: 0,
+const FeedBack = () => {
+  // state = {
+  //   good: 0,
+  //   neutral: 0,
+  //   bad: 0,
+  // };
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
+  console.log(bad);
+  const handleClick = key => {
+    console.log(key);
+    if (key === good) {
+      setGood(prevState => prevState + 1);
+    }
+    if (key === neutral) {
+      setNeutral(prevState => prevState + 1);
+    }
+    if (key === bad) {
+      setBad(prevState => prevState + 1);
+    }
   };
-  handleClick = key => {
-    this.setState(prevState => {
-      return { [key]: prevState[key] + 1 };
-    });
-  };
-  countTotalFeedback = () => {
-    const { good, neutral, bad } = this.state;
+  const countTotalFeedback = () => {
     return good + neutral + bad;
   };
-  countPositiveFeedbackPercentage = total => {
-    const { good } = this.state;
-
+  const countPositiveFeedbackPercentage = total => {
     return total > 0 ? Math.round((good * 100) / total) : 0;
   };
 
-  render() {
-    const { good, neutral, bad } = this.state;
-    return (
-      <div>
-        <GlobalStyle />
-        <Container>
-          <Section title="Please leave feedback">
-            <FeedBackOption options={Object.keys(this.state)} onLeaveFeedback={this.handleClick} />
-          </Section>
-          <Section title="Statistics">
-            <Statistics
-              good={good}
-              neutral={neutral}
-              bad={bad}
-              total={this.countTotalFeedback()}
-              positivePercentage={this.countPositiveFeedbackPercentage(this.countTotalFeedback())}
-            />
-          </Section>
-        </Container>
-      </div>
-    );
-  }
-}
+  const state = { good, neutral, bad };
+  return (
+    <div>
+      <GlobalStyle />
+      <Container>
+        <Section title="Please leave feedback">
+          <FeedBackOption
+            options={Object.keys(state)}
+            onLeaveFeedback={handleClick}
+          />
+        </Section>
+        <Section title="Statistics">
+          <Statistics
+            good={good}
+            neutral={neutral}
+            bad={bad}
+            total={countTotalFeedback()}
+            positivePercentage={countPositiveFeedbackPercentage(
+              countTotalFeedback()
+            )}
+          />
+        </Section>
+      </Container>
+    </div>
+  );
+};
 
 export default FeedBack;
