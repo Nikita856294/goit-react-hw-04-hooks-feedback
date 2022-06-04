@@ -17,14 +17,14 @@ const FeedBack = () => {
   console.log(bad);
   const handleClick = key => {
     console.log(key);
-    if (key === good) {
-      setGood(prevState => prevState + 1);
+    if (key === 'good') {
+      return setGood(prevState => prevState + 1);
     }
-    if (key === neutral) {
-      setNeutral(prevState => prevState + 1);
+    if (key === 'neutral') {
+      return setNeutral(prevState => prevState + 1);
     }
-    if (key === bad) {
-      setBad(prevState => prevState + 1);
+    if (key === 'bad') {
+      return setBad(prevState => prevState + 1);
     }
   };
   const countTotalFeedback = () => {
